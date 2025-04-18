@@ -1,6 +1,6 @@
 # Project Status
 
-## ✅ Completed
+## Completed
 
 ### Backend
 - GraphQL API (NestJS) with `Task` type and CRUD resolvers (`createTask`, `tasks`, `updateTask`, `deleteTask`).
@@ -14,16 +14,16 @@
 - Env vars configured (`MONGODB_URI`, `REDIS_HOST`, `REDIS_PORT`, `RABBITMQ_URL`, `PORT`).
 - Basic end-to-end tested via `curl` queries and mutations.
 
-## 🔄 In Progress
+## In Progress
 
 ### Backend
-- Redis caching layer for `tasks` query (cache TTL).
+- Redis caching layer for `tasks` query (cache TTL) ✅ completed
 
 ### Logging & Visualization
-- Filebeat/Logstash setup for harvesting JSON logs.
-- Kibana dashboard JSON and import instructions.
+- Filebeat/Logstash setup for harvesting JSON logs ✅ completed
+- Kibana dashboard JSON created; import via init container currently failing due to readiness loop issues.
 
-## 🚧 To Do
+## To Do
 
 ### Frontend
 - Scaffold Next.js + React app.
@@ -47,4 +47,4 @@
   - Placeholder screenshots.
 
 ---
-_Last updated: 2025-04-18_
+_Last updated: 2025-04-18T17:52:43+03:00_

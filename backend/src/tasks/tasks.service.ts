@@ -30,7 +30,13 @@ export class TasksService implements OnModuleInit {
     const cachedJson = await this.redisClient.get(this.cacheKey);
     if (cachedJson) {
       this.log('cacheHit', null, {});
-      return JSON.parse(cachedJson);
+      const tasks: any[] = JSON.parse(cachedJson);
+      // Restore Date objects for GraphQL DateTime
+      return tasks.map(t => ({
+        ...t,
+        createdAt: new Date(t.createdAt),
+        updatedAt: new Date(t.updatedAt),
+      }));
     }
     const docs = await this.taskModel.find().exec();
     const tasks = docs.map(doc => ({
