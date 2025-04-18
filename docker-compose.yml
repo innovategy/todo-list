@@ -1,0 +1,29 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - '4000:4000'
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/todo
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - RABBITMQ_URL=amqp://rabbitmq:5672
+      - PORT=4000
+    depends_on:
+      - mongo
+      - redis
+      - rabbitmq
+  mongo:
+    image: mongo:6.0
+    ports:
+      - '27017:27017'
+  redis:
+    image: redis:7.0-alpine
+    ports:
+      - '6379:6379'
+  rabbitmq:
+    image: rabbitmq:3.11-management
+    ports:
+      - '5672:5672'
+      - '15672:15672'
