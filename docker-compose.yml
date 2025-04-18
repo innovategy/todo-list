@@ -15,15 +15,54 @@ services:
       - redis
       - rabbitmq
   mongo:
-    image: mongo:6.0
+    image: mongo:8.0.4
     ports:
       - '27017:27017'
   redis:
-    image: redis:7.0-alpine
+    image: redis:7.4.2-alpine
     ports:
       - '6379:6379'
   rabbitmq:
-    image: rabbitmq:3.11-management
+    image: rabbitmq:4.1-management
     ports:
       - '5672:5672'
       - '15672:15672'
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:9.0.0
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - '9200:9200'
+  kibana:
+    image: docker.elastic.co/kibana/kibana:9.0.0
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY=changemechangemechangemechangeme
+    ports:
+      - '5601:5601'
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:9.0.0
+    user: root
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - '/var/lib/docker/containers:/var/lib/docker/containers:ro'
+      - './filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro'
+    depends_on:
+      - elasticsearch
+      - backend
+  kibana-init:
+    image: curlimages/curl:7.88.1
+    depends_on:
+      - kibana
+    volumes:
+      - './kibana-dashboard.ndjson:/dashboard.ndjson:ro'
+    entrypoint:
+      - sh
+      - -c
+      - |
+        echo "SG: Waiting for Kibana to be ready..."
+        until curl -s http://kibana:5601/api/status | grep '"overall":{\"level\":\"available\"}'; do sleep 5; done
+        echo "SG: Importing Kibana saved objects..."
+        curl -X POST http://kibana:5601/api/saved_objects/_import -H "kbn-xsrf: true" --form file=@/dashboard.ndjson
+        echo "SG: Import complete."

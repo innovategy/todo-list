@@ -1,0 +1,86 @@
+A complete, containerized full‑stack “To‑Do List” application with the following specifications:
+
+Tech Stack
+----------
+- **DevOps:** Docker, Kubernetes, Helm, ELK Stack (Elasticsearch, Logstash/Filebeat, Kibana)  
+- **Backend:** NestJS, MongoDB, RabbitMQ, Redis, Apollo GraphQL  
+- **Frontend:** React, Next.js, SCSS, Apollo GraphQL  
+
+What to Build
+-------------
+A To‑Do List app with GraphQL‑powered CRUD operations. Tasks must be stored in MongoDB, cached in Redis, and each CRUD event published to RabbitMQ. All operations must be logged in JSON and visualized in Kibana.
+
+Detailed Requirements
+---------------------
+
+1. **Backend (NestJS)**
+   - GraphQL API (Apollo Server) exposing `Task` type with `id`, `title`, `completed`, `createdAt`, `updatedAt`.
+   - CRUD resolvers: `createTask`, `tasks` (list), `updateTask`, `deleteTask`.
+   - MongoDB integration via Mongoose.
+   - Redis caching layer for the `tasks` query (e.g., cache results for 30s).
+   - RabbitMQ publisher: emit a message on a `tasks.events` exchange for every create/update/delete.
+   - JSON logging middleware or interceptor that writes to stdout: `{ timestamp, level, operation, taskId, payload }`.
+
+2. **Frontend (Next.js + React + SCSS)**
+   - Apollo Client setup to call the GraphQL API.
+   - Pages/components for listing tasks, adding a new task, editing, deleting.
+   - Optimistic UI updates when mutating.
+   - GraphQL subscription or polling to reflect real‑time changes.
+
+3. **Containerization & Local Orchestration**
+   - **Dockerfiles** for: backend, frontend, MongoDB, RabbitMQ, Redis, Filebeat/Logstash, Elasticsearch, Kibana.
+   - A `docker-compose.yml` that brings up all services for local development.
+   - In the README, for each service explain why it’s containerized (e.g., consistency, portability, isolation).
+
+4. **Production Deployment (Kubernetes + Helm)**
+   - Kubernetes manifests (Deployments, Services, ConfigMaps, Secrets) for all components.
+   - A Helm chart under `/charts/todo-app` that:
+     - Parameterizes image tags, replica counts, resources, environment variables.
+     - Installs backend, frontend, MongoDB, RabbitMQ, Redis, and ELK with sensible defaults.
+   - Values file documenting each configurable parameter.
+
+5. **Logging & Visualization**
+   - Configure Filebeat (or Logstash) in Docker Compose and in the Helm chart to harvest JSON logs from the NestJS container.
+   - Forward logs to Elasticsearch.
+   - Provide a `kibana-dashboard.json` that defines a basic dashboard showing:
+    - Total CRUD operations over time.
+     - Error/exception logs.
+   - Instructions in the README to import the dashboard into Kibana.
+
+6. **README.md**
+   - **Getting Started:** How to build and run locally with Docker Compose.
+   - **Dockerization Rationale:** Why each service is containerized.
+   - **Deploy to Kubernetes:** Helm install commands and prerequisites.
+   - **Accessing Kibana:** URL, sample credentials, importing the dashboard.
+   - **Screenshots / Descriptions:** Placeholder images or descriptions of the Kibana dashboard.
+
+Deliverables & Structure
+------------------------
+Your AI should output a directory tree like this:
+
+```
+/project-root
+├── backend
+│   ├── Dockerfile
+│   ├── src/
+│   └── …
+├── frontend
+│   ├── Dockerfile
+│   ├── pages/
+│   └── styles/
+├── charts
+│   └── todo-app/
+│       ├── Chart.yaml
+│       ├── values.yaml
+│       └── templates/
+├── k8s
+│   ├── deployments.yaml
+│   ├── services.yaml
+│   └── configmaps.yaml
+├── docker-compose.yml
+├── kibana-dashboard.json
+└── README.md
+
+Generate all source code, config files, manifests, charts, dashboard JSON, and a fully fleshed‑out README exactly as specified.```
+
+Use this prompt verbatim to get a one‑shot generation of the entire project.
