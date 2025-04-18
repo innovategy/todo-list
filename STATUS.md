@@ -7,6 +7,8 @@
 - MongoDB integration via Mongoose.
 - RabbitMQ event publishing using `amqplib` / `amqp-connection-manager`.
 - JSON logging middleware to stdout.
+- CORS enabled for frontend origin 
+- Cache rehydration of DateTime for GraphQLISODateTime 
 
 ### DevOps - Docker
 - Multi-stage `Dockerfile` for backend (build + production).
@@ -14,25 +16,16 @@
 - Env vars configured (`MONGODB_URI`, `REDIS_HOST`, `REDIS_PORT`, `RABBITMQ_URL`, `PORT`).
 - Basic end-to-end tested via `curl` queries and mutations.
 
+### Frontend
+- Next.js + React scaffold with Apollo Client integration, CRUD UI (list, add, update, delete), SCSS styling, real-time polling/subscriptions 
+- Frontend `.gitignore` added 
+
 ## In Progress
 
-### Backend
-- Redis caching layer for `tasks` query (cache TTL) ✅ completed
-
 ### Logging & Visualization
-- Filebeat/Logstash setup for harvesting JSON logs ✅ completed
 - Kibana dashboard JSON created; import via init container currently failing due to readiness loop issues.
 
 ## To Do
-
-### Frontend
-- Scaffold Next.js + React app.
-- Apollo Client setup.
-- Pages/components for list/add/edit/delete tasks.
-- SCSS styling and real-time updates (subscriptions/polling).
-
-### DevOps - Docker Compose
-- Add `.dockerignore`.
 
 ### Production Deployment
 - Kubernetes manifests (Deployments, Services, ConfigMaps, Secrets).
@@ -47,4 +40,4 @@
   - Placeholder screenshots.
 
 ---
-_Last updated: 2025-04-18T17:52:43+03:00_
+_Last updated: 2025-04-18T18:53:43+03:00_
