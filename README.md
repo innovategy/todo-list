@@ -1,15 +1,17 @@
 # To-Do List Application
+*A fully containerized full‑stack To‑Do List application*
 
- ## Demo Video
- <iframe width="560" height="315" src="https://www.youtube.com/embed/Lif07JK8G00" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+## Demo Video
 
-A fully containerized full‑stack To‑Do List application built with:
+[![To-Do Application Demo 🚀 - Watch Video](https://cdn.loom.com/sessions/thumbnails/1516c16afb994b1cb177abcb18c9d40a-28c0f9908cec6133-full-play.gif)](https://www.loom.com/share/1516c16afb994b1cb177abcb18c9d40a)
+
+## Tech Stack
 
 - **DevOps:** Docker & Docker Compose, ELK Stack (Elasticsearch, Filebeat, Kibana)
 - **Backend:** NestJS, MongoDB, RabbitMQ, Redis, Apollo GraphQL
 - **Frontend:** React, Next.js, SCSS, Apollo Client
 
-_Last Updated: April 19, 2025_
+_Last Updated: April 20, 2025_ 
 
 ## Table of Contents
 1. [Project Overview](#project-overview)
