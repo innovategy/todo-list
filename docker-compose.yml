@@ -14,6 +14,15 @@ services:
       - mongo
       - redis
       - rabbitmq
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - '3000:3000'
+    environment:
+      - GRAPHQL_URI=http://backend:4000/graphql
+    depends_on:
+      - backend
   mongo:
     image: mongo:8.0.4
     ports:
